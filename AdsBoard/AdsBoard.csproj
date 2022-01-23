@@ -67,6 +67,7 @@
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="Common\Cryptograpy.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\DBModel.cs" />
     <Compile Include="ViewModel\ContextMainWindow.cs" />
     <Compile Include="View\App.xaml.cs">

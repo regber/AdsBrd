@@ -8,9 +8,26 @@ using System.Data.Entity;
 
 namespace AdsBoard.Model
 {
-    class DBModel
+    class DBModel:DbContext
     {
+        private static DBModel thisDBModel;
 
+        public static DBModel GetDBModel()
+        {
+            if (thisDBModel == null) { thisDBModel = new DBModel(); }
+
+            return thisDBModel;
+        }
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Account>().HasMany(a => a.Ads);
+            modelBuilder.Entity<Account>().HasRequired(a => a.UserProfile).WithRequiredDependent(u=>u.Account);
+
+            modelBuilder.Entity<Ad>().HasRequired(a=>a.MainImage);
+            modelBuilder.Entity<Ad>().HasMany(a => a.Images);
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
     class Account
     {
