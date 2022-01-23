@@ -15,9 +15,9 @@ namespace AdsBoard.Model
     class Account
     {
 
-
         public int Id { get; set; }
         public string Login { get; set; }
+
         private string _Password;
         public string Password 
         { 
@@ -31,6 +31,39 @@ namespace AdsBoard.Model
             }
         }
 
+        public UserProfile UserProfile { get; set; }
+        public ICollection<Ad> Ads { get; set; }
+    }
+
+    class UserProfile
+    {
+        public int Id { get; set; }
+        public string FirstName { get; set; }
+        public string SecondName { get; set; }
+
+        public string PhoneNumber { get; set; }
+        public string EMail { get; set; }
+
+        public Account Account { get; set; }
+    }
+
+    class Ad
+    {
+        public int Id { get; set; }
+
+        public string Header { get; set; }
+        public string Text { get; set; }
+
+        public Image MainImage { get; set; }
+        public ICollection<Image> Images { get; set; }
+
+    }
+
+    class Image
+    {
+        public int Id { get; set; }
+
+        public string ImagePath { get; set; }
 
     }
 }
