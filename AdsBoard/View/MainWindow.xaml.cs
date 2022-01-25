@@ -23,6 +23,20 @@ namespace AdsBoard
         public MainWindow()
         {
             InitializeComponent();
+
+            /*
+            using(Model.DBModel db = new Model.DBModel())
+            {
+                var accounts = db.Accounts.Include("UserProfile").ToList();
+                foreach(var a in accounts)
+                {
+                    MessageBox.Show(a.UserProfile.FirstName);
+                }
+            }*/
+
+
+           
+
             Model.Account acc = new Model.Account();
             acc.Password = "1241251251";
 
