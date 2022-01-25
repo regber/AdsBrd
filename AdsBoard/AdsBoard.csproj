@@ -67,6 +67,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="Common\Cryptograpy.cs" />
+    <Compile Include="Migrations\202201241953370_migration.cs" />
+    <Compile Include="Migrations\202201241953370_migration.Designer.cs">
+      <DependentUpon>202201241953370_migration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\DBModel.cs" />
     <Compile Include="ViewModel\ContextMainWindow.cs" />
@@ -93,6 +97,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Migrations\202201241953370_migration.resx">
+      <DependentUpon>202201241953370_migration.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

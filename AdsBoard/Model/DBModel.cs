@@ -10,6 +10,9 @@ namespace AdsBoard.Model
 {
     class DBModel:DbContext
     {
+
+        public DBModel() : base("name=AdsDBConnection") { }
+
         private static DBModel thisDBModel;
 
         public static DBModel GetDBModel()
@@ -20,14 +23,36 @@ namespace AdsBoard.Model
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Account>().HasMany(a => a.Ads);
-            modelBuilder.Entity<Account>().HasRequired(a => a.UserProfile).WithRequiredDependent(u=>u.Account);
 
-            modelBuilder.Entity<Ad>().HasRequired(a=>a.MainImage);
-            modelBuilder.Entity<Ad>().HasMany(a => a.Images);
+            //modelBuilder.Entity<Account>().HasMany(a => a.Ads).WithRequired(ad => ad.Account).Map(m=>m.MapKey("AccountId"));//!
+
+            //modelBuilder.Entity<UserProfile>().HasRequired(u => u.Account).WithRequiredDependent(a => a.UserProfile).WillCascadeOnDelete(true);//!
+
+            //modelBuilder.Entity<Ad>().Property(ad => ad.Id).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);//!
+
+            modelBuilder.Entity<UserProfile>().HasRequired(u => u.Account).WithRequiredDependent(a => a.UserProfile).WillCascadeOnDelete(true);
+            modelBuilder.Entity<UserProfile>().Property(u => u.FirstName).IsRequired();
+            modelBuilder.Entity<UserProfile>().Property(u => u.SecondName).IsRequired();
+            modelBuilder.Entity<UserProfile>().Property(u => u.PhoneNumber).IsRequired();
+            modelBuilder.Entity<UserProfile>().Property(u => u.EMail).IsRequired();
+
+            modelBuilder.Entity<Account>().HasMany(a => a.Ads).WithRequired(ad => ad.Account).WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<Image>().Property(i => i.Id).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
+            modelBuilder.Entity<Image>().HasRequired(i => i.Ad).WithRequiredDependent(ad=>ad.MainImage).WillCascadeOnDelete(true);
+            modelBuilder.Entity<Image>().HasRequired(i=>i.Ad).WithMany(ad=>ad.Images).WillCascadeOnDelete(true);
+
+
+            //modelBuilder.Entity<Ad>().HasRequired(a=>a.MainImage).WithOptional().WillCascadeOnDelete(false);
+            //modelBuilder.Entity<Ad>().HasMany(a => a.Images);
 
             base.OnModelCreating(modelBuilder);
         }
+
+        public DbSet<Account> Accounts { get; set; }
+        public DbSet<UserProfile> UsersProfiles { get; set; }
+        public DbSet<Ad> Ads { get; set; }
+        public DbSet<Image> Images { get; set; }
     }
     class Account
     {
@@ -71,6 +96,8 @@ namespace AdsBoard.Model
         public string Header { get; set; }
         public string Text { get; set; }
 
+        public Account Account { get; set; }
+
         public Image MainImage { get; set; }
         public ICollection<Image> Images { get; set; }
 
@@ -81,6 +108,8 @@ namespace AdsBoard.Model
         public int Id { get; set; }
 
         public string ImagePath { get; set; }
+
+        public Ad Ad { get; set; }
 
     }
 }
