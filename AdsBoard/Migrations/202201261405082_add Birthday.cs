@@ -3,7 +3,7 @@ namespace AdsBoard.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class migration : DbMigration
+    public partial class addBirthday : DbMigration
     {
         public override void Up()
         {
@@ -52,6 +52,7 @@ namespace AdsBoard.Migrations
                         Id = c.Int(nullable: false),
                         FirstName = c.String(nullable: false),
                         SecondName = c.String(nullable: false),
+                        Birthday = c.DateTime(nullable: false),
                         PhoneNumber = c.String(nullable: false),
                         EMail = c.String(nullable: false),
                     })

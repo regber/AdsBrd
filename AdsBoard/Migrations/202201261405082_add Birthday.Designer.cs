@@ -7,13 +7,13 @@ namespace AdsBoard.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class migration : IMigrationMetadata
+    public sealed partial class addBirthday : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(migration));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(addBirthday));
         
         string IMigrationMetadata.Id
         {
-            get { return "202201260748290_migration"; }
+            get { return "202201261405082_add Birthday"; }
         }
         
         string IMigrationMetadata.Source

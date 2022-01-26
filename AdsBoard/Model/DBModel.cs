@@ -10,17 +10,41 @@ namespace AdsBoard.Model
 {
     class DBModel:DbContext
     {
-
         public DBModel() : base("name=AdsDBConnection") { }
 
         private static DBModel thisDBModel;
 
         public static DBModel GetDBModel()
         {
-            if (thisDBModel == null) { thisDBModel = new DBModel(); }
+            if (thisDBModel == null) 
+            { 
+                thisDBModel = new DBModel();
+            }
 
             return thisDBModel;
         }
+
+
+        public List<Account> GetAccounts()
+        {
+            var accounts = thisDBModel.Accounts.Include(a => a.UserProfile).Include(a => a.Ads).ToList();
+
+            return accounts;
+        }
+        public List<Ad> GetAds()
+        {
+            var ads = thisDBModel.Ads.Include(ad=>ad.Account).Include(ad=>ad.MainImage).Include(ad=>ad.Images).ToList();
+
+            return ads;
+        }
+        public List<Image> GetAdsImages()
+        {
+            var images = thisDBModel.Images.Include(a => a.Ad).ToList();
+
+            return images;
+        }
+
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Account>().Property(a => a.Login).IsRequired();
@@ -29,6 +53,7 @@ namespace AdsBoard.Model
             modelBuilder.Entity<UserProfile>().HasRequired(u => u.Account).WithOptional(a => a.UserProfile).WillCascadeOnDelete(true);
             modelBuilder.Entity<UserProfile>().Property(p => p.FirstName).IsRequired();
             modelBuilder.Entity<UserProfile>().Property(p => p.SecondName).IsRequired();
+            modelBuilder.Entity<UserProfile>().Property(p => p.Birthday).IsRequired();
             modelBuilder.Entity<UserProfile>().Property(p => p.PhoneNumber).IsRequired();
             modelBuilder.Entity<UserProfile>().Property(p => p.EMail).IsRequired();
 
@@ -37,22 +62,6 @@ namespace AdsBoard.Model
             modelBuilder.Entity<Image>().HasRequired(i => i.Ad).WithOptional(ad => ad.MainImage).WillCascadeOnDelete(true);
             modelBuilder.Entity<Image>().HasRequired(i => i.Ad).WithMany(ad => ad.Images);
 
-
-            /*
-            modelBuilder.Entity<UserProfile>().HasRequired(u => u.Account).WithRequiredDependent(a => a.UserProfile).WillCascadeOnDelete(true);
-            modelBuilder.Entity<UserProfile>().Property(u => u.FirstName).IsRequired();
-            modelBuilder.Entity<UserProfile>().Property(u => u.SecondName).IsRequired();
-            modelBuilder.Entity<UserProfile>().Property(u => u.PhoneNumber).IsRequired();
-            modelBuilder.Entity<UserProfile>().Property(u => u.EMail).IsRequired();
-
-            modelBuilder.Entity<Account>().HasMany(a => a.Ads).WithRequired(ad => ad.Account).WillCascadeOnDelete(true);
-            modelBuilder.Entity<Account>().Property(a => a.Login).IsRequired();
-            modelBuilder.Entity<Account>().Property(a => a.Password).IsRequired();
-
-            modelBuilder.Entity<Image>().Property(i => i.Id).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
-            modelBuilder.Entity<Image>().HasRequired(i => i.Ad).WithRequiredDependent(ad=>ad.MainImage).WillCascadeOnDelete(true);
-            modelBuilder.Entity<Image>().HasRequired(i=>i.Ad).WithMany(ad=>ad.Images).WillCascadeOnDelete(true);
-            */
             base.OnModelCreating(modelBuilder);
         }
 
@@ -89,6 +98,8 @@ namespace AdsBoard.Model
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string SecondName { get; set; }
+
+        public DateTime Birthday { get; set; }
 
         public string PhoneNumber { get; set; }
         public string EMail { get; set; }

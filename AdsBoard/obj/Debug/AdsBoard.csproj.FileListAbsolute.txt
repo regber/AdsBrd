@@ -19,4 +19,6 @@ C:\Users\Zevas\source\repos\AdsBoard\AdsBoard\obj\Debug\AdsBoard.csproj.CopyComp
 C:\Users\Zevas\source\repos\AdsBoard\AdsBoard\obj\Debug\AdsBoard.exe
 C:\Users\Zevas\source\repos\AdsBoard\AdsBoard\obj\Debug\AdsBoard.pdb
 C:\Users\Zevas\source\repos\AdsBoard\AdsBoard\obj\Debug\AdsBoard.csproj.AssemblyReference.cache
-C:\Users\Zevas\source\repos\AdsBoard\AdsBoard\obj\Debug\AdsBoard.Migrations.migration.resources
+C:\Users\Zevas\source\repos\AdsBoard\AdsBoard\obj\Debug\AdsBoard.Migrations.addBirthday.resources
+C:\Users\Zevas\source\repos\AdsBoard\AdsBoard\obj\Debug\AdsBoard.Migrations.addinheritanceDBclasstoViewModel.resources
+C:\Users\Zevas\source\repos\AdsBoard\AdsBoard\obj\Debug\AdsBoard.Migrations.addinheritanceDBclasstoViewModel2.resources
