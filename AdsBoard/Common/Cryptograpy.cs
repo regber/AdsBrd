@@ -14,40 +14,54 @@ namespace AdsBoard.Common
 
         public static string Encrypt(string decryptString)
         {
-            using (var md5 = MD5.Create())
+            if(decryptString!=null)
             {
-                using (var tdes = System.Security.Cryptography.TripleDESCryptoServiceProvider.Create())
+                using (var md5 = MD5.Create())
                 {
-                    tdes.Key = md5.ComputeHash(UTF8Encoding.UTF8.GetBytes(Key));
-                    tdes.Mode = CipherMode.ECB;
-                    tdes.Padding = PaddingMode.PKCS7;
-
-                    using (var encryptor = tdes.CreateEncryptor())
+                    using (var tdes = System.Security.Cryptography.TripleDESCryptoServiceProvider.Create())
                     {
-                        byte[] strBytes = UTF8Encoding.UTF8.GetBytes(decryptString);
-                        byte[] bytes = encryptor.TransformFinalBlock(strBytes, 0, strBytes.Length);
-                        return Convert.ToBase64String(bytes, 0, bytes.Length);
+                        tdes.Key = md5.ComputeHash(UTF8Encoding.UTF8.GetBytes(Key));
+                        tdes.Mode = CipherMode.ECB;
+                        tdes.Padding = PaddingMode.PKCS7;
+
+                        using (var encryptor = tdes.CreateEncryptor())
+                        {
+                            byte[] strBytes = UTF8Encoding.UTF8.GetBytes(decryptString);
+                            byte[] bytes = encryptor.TransformFinalBlock(strBytes, 0, strBytes.Length);
+                            return Convert.ToBase64String(bytes, 0, bytes.Length);
+                        }
                     }
                 }
+            }
+            else
+            {
+                return string.Empty;
             }
         }
         public static string Decrypt(string encryptString)
         {
-            using (var md5 = new MD5CryptoServiceProvider())
+            if(encryptString !=null)
             {
-                using (var tdes = new TripleDESCryptoServiceProvider())
+                using (var md5 = new MD5CryptoServiceProvider())
                 {
-                    tdes.Key = md5.ComputeHash(UTF8Encoding.UTF8.GetBytes(Key));
-                    tdes.Mode = CipherMode.ECB;
-                    tdes.Padding = PaddingMode.PKCS7;
-
-                    using (var transform = tdes.CreateDecryptor())
+                    using (var tdes = new TripleDESCryptoServiceProvider())
                     {
-                        byte[] encryptBytes = Convert.FromBase64String(encryptString);
-                        byte[] bytes = transform.TransformFinalBlock(encryptBytes, 0, encryptBytes.Length);
-                        return UTF8Encoding.UTF8.GetString(bytes);
+                        tdes.Key = md5.ComputeHash(UTF8Encoding.UTF8.GetBytes(Key));
+                        tdes.Mode = CipherMode.ECB;
+                        tdes.Padding = PaddingMode.PKCS7;
+
+                        using (var transform = tdes.CreateDecryptor())
+                        {
+                            byte[] encryptBytes = Convert.FromBase64String(encryptString);
+                            byte[] bytes = transform.TransformFinalBlock(encryptBytes, 0, encryptBytes.Length);
+                            return UTF8Encoding.UTF8.GetString(bytes);
+                        }
                     }
                 }
+            }
+            else
+            {
+                return string.Empty;
             }
         }
     }

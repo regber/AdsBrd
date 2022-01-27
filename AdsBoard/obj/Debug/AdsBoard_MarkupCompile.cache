@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Zevas\source\repos\AdsBoard\AdsBoard\View\App.xaml
-1-1711142684
+5-262764699
 
-16-646696852
+32-2004115037
 161824624740
-View\MainWindow.xaml;
+View\MainWindow.xaml;View\Windows\AdCreateUC.xaml;View\Windows\AdsUC.xaml;View\Windows\EnterUC.xaml;View\Windows\RegisterUC.xaml;
 
 False
 

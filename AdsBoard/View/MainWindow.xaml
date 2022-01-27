@@ -12,33 +12,6 @@
     <Window.DataContext>
         <Binding Source="{StaticResource ContextMainWindow}"></Binding>
     </Window.DataContext>
-
-    <Grid Background="WhiteSmoke">
-        <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-        </Grid.RowDefinitions>
-        <Grid Grid.Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            
-            <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" FontSize="20">Login:</TextBlock>
-            <TextBox Grid.Row="0" Grid.Column="1"></TextBox>
-            <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" FontSize="20">Password:</TextBlock>
-            <TextBox  Grid.Row="1" Grid.Column="1"></TextBox>
-            <Button Grid.Row="2" Grid.Column="1" FontSize="20">Enter</Button>
-            <Button Grid.Row="3" Grid.Column="1" FontSize="20">Register</Button>
-        </Grid>
-        <!--Button FontSize="50" Command="{Binding MyCommand}">Call</Button-->
-    </Grid>
+    <!--Frame Content="{Binding MainWindowContent, UpdateSourceTrigger=PropertyChanged}"/-->
+    <ContentControl Content="{Binding MainWindowContent, UpdateSourceTrigger=PropertyChanged}"></ContentControl>
 </Window>

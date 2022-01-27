@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace AdsBoard.Common
+namespace AdsBoard.Common.Commands
 {
     class Command : ICommand
     {

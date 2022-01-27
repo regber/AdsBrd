@@ -62,12 +62,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="View\MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Compile Include="Common\Command.cs" />
-    <Compile Include="Common\Cryptograpy.cs" />
+    <Compile Include="Common\Commands\CommandMultParam.cs" />
+    <Compile Include="Common\Converters\CheckEmptyStringConverter.cs" />
+    <Compile Include="Common\Converters\CheckNullConverter.cs" />
+    <Compile Include="Common\Converters\MultiParamConverter.cs" />
+    <Compile Include="Common\Notify.cs" />
     <Compile Include="Migrations\202201261405082_add Birthday.cs" />
     <Compile Include="Migrations\202201261405082_add Birthday.Designer.cs">
       <DependentUpon>202201261405082_add Birthday.cs</DependentUpon>
@@ -80,6 +79,32 @@
     <Compile Include="Migrations\202201261444415_add inheritance DB class to ViewModel2.Designer.cs">
       <DependentUpon>202201261444415_add inheritance DB class to ViewModel2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202201271358235_Encrypt password.cs" />
+    <Compile Include="Migrations\202201271358235_Encrypt password.Designer.cs">
+      <DependentUpon>202201271358235_Encrypt password.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\Windows\ContextAdCreateUC.cs" />
+    <Compile Include="ViewModel\Windows\ContextAdsUC.cs" />
+    <Compile Include="ViewModel\Windows\ContextEnterUC.cs" />
+    <Compile Include="ViewModel\Windows\ContextRegisterUC.cs" />
+    <Compile Include="View\Windows\AdCreateUC.xaml.cs">
+      <DependentUpon>AdCreateUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\AdsUC.xaml.cs">
+      <DependentUpon>AdsUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\EnterUC.xaml.cs">
+      <DependentUpon>EnterUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\RegisterUC.xaml.cs">
+      <DependentUpon>RegisterUC.xaml</DependentUpon>
+    </Compile>
+    <Page Include="View\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="Common\Commands\Command.cs" />
+    <Compile Include="Common\Cryptograpy.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\DBModel.cs" />
     <Compile Include="ViewModel\ContextMainWindow.cs" />
@@ -92,6 +117,22 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\Windows\AdCreateUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\AdsUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\EnterUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\RegisterUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -115,6 +156,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202201261444415_add inheritance DB class to ViewModel2.resx">
       <DependentUpon>202201261444415_add inheritance DB class to ViewModel2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201271358235_Encrypt password.resx">
+      <DependentUpon>202201271358235_Encrypt password.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

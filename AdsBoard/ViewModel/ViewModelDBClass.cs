@@ -18,23 +18,26 @@ namespace AdsBoard.ViewModel
                     string error = String.Empty;
                     switch (columnName)
                     {
-                        case "FirstName":
+                        case "Login":
+                            if (Login=="")
+                            {
+                                error = "Поле не должно быть пустым";
+                            }
                             break;
-                        case "SecondName":
-                            break;
-                        case "Birthday":
-                            break;
-                        case "PhoneNumber":
-                            break;
-                        case "EMail":
+                        case "Password":
+                            if (Password == "")
+                            {
+                                error = "Поле не должно быть пустым";
+                            }
                             break;
                     }
                     return error;
                 }
-
             }
-
-            public string Error => throw new NotImplementedException();
+            public string Error
+            {
+                get { throw new NotImplementedException(); }
+            }
         }
 
         class UserProfileVM : Model.UserProfile, IDataErrorInfo

@@ -20,7 +20,6 @@ namespace AdsBoard.Model
             { 
                 thisDBModel = new DBModel();
             }
-
             return thisDBModel;
         }
 
@@ -48,7 +47,8 @@ namespace AdsBoard.Model
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Account>().Property(a => a.Login).IsRequired();
-            modelBuilder.Entity<Account>().Property(a => a.Password).IsRequired();
+            modelBuilder.Entity<Account>().Property(a => a.EncryptPassword).IsRequired();
+            modelBuilder.Entity<Account>().Ignore(a => a.Password);
 
             modelBuilder.Entity<UserProfile>().HasRequired(u => u.Account).WithOptional(a => a.UserProfile).WillCascadeOnDelete(true);
             modelBuilder.Entity<UserProfile>().Property(p => p.FirstName).IsRequired();
@@ -76,16 +76,16 @@ namespace AdsBoard.Model
         public int Id { get; set; }
         public string Login { get; set; }
 
-        private string _Password;
+        public string EncryptPassword { get; set; }
         public string Password 
         { 
             get
             {
-                return Common.Cryprograpy.Decrypt(_Password);
+                return Common.Cryprograpy.Decrypt(EncryptPassword);
             }
             set
             {
-                _Password = Common.Cryprograpy.Encrypt(value);
+                EncryptPassword = Common.Cryprograpy.Encrypt(value);
             }
         }
 
