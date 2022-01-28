@@ -9,6 +9,14 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <ViewModel:ContextRegisterUC x:Key="ContextRegisterUC"></ViewModel:ContextRegisterUC>
+        <Style x:Key="ValidationTextBox" TargetType="TextBox">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(Validation.Errors)[0].ErrorContent}">
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
     <UserControl.DataContext>
         <Binding Source="{StaticResource ContextRegisterUC}"></Binding>
@@ -25,7 +33,6 @@
         <GroupBox Header="Account" Grid.Column="0">
             <StackPanel Orientation="Vertical">
                 <Grid>
-
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition Width="3*"></ColumnDefinition>
@@ -40,9 +47,33 @@
                     <TextBlock Text="Password:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"></TextBlock>
                     <TextBlock Text="Retry Password:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"></TextBlock>
 
-                    <TextBox Width="150" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"></TextBox>
-                    <TextBox Width="150" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left"></TextBox>
-                    <TextBox Width="150" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left"></TextBox>
+                    <TextBox DataContext="{Binding registeredAccount}" Width="150" Grid.Row="0" Grid.Column="1" Style="{StaticResource ValidationTextBox}" HorizontalAlignment="Left">
+                        <TextBox.Text>
+                            <Binding Path="Login"  UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <DataErrorValidationRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <TextBox DataContext="{Binding registeredAccount}" Width="150" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left">
+                        <TextBox.Text>
+                            <Binding Path="Password"  UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <DataErrorValidationRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <TextBox Width="150" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left">
+                        <TextBox.Text>
+                            <Binding Path="retryPassword"  UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <DataErrorValidationRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
 
                 </Grid>
             </StackPanel>
@@ -72,7 +103,7 @@
 
                     <TextBox Width="150" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"></TextBox>
                     <TextBox Width="150" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left"></TextBox>
-                    <CalendarButton Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left"></CalendarButton>
+                    <DatePicker Width="150"  Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" IsDropDownOpen="False" SelectedDateFormat="Short" />
                     <TextBox Width="150" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left"></TextBox>
                     <TextBox Width="150" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left"></TextBox>
 
@@ -80,9 +111,8 @@
             </StackPanel>
         </GroupBox>
         <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" >
-            <Button Width="100" Height="30" Margin="0 0 10 0">Cancel</Button>
-            <Button Width="100" Height="30" Margin="0 0 10 0">Ok</Button>
+            <Button Command="{Binding Cancel}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}" Width="100" Height="30" Margin="0 0 10 0">Cancel</Button>
+            <Button Command="{Binding Ok}" Width="100" Height="30" Margin="0 0 10 0">Ok</Button>
         </StackPanel>
-
     </Grid>
 </UserControl>

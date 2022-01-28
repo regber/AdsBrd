@@ -12,14 +12,6 @@
         <ViewModel:ContextEnterUC x:Key="ContextEnterUC"></ViewModel:ContextEnterUC>
         <Converters:MultiParamConverter x:Key="MultiParamConverter"></Converters:MultiParamConverter>
         <Converters:CheckEmptyStringConverter x:Key="CheckEmptyStringConverter"></Converters:CheckEmptyStringConverter>
-        <Style x:Key="ValidationTextBox" TargetType="TextBox">
-            <Style.Triggers>
-                <Trigger Property="Validation.HasError" Value="True">
-                    <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(Validation.Errors)[0].ErrorContent}">
-                    </Setter>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
     </UserControl.Resources>
     <UserControl.DataContext>
         <Binding Source="{StaticResource ContextEnterUC}"></Binding>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
+using System.Text.RegularExpressions;
 
 namespace AdsBoard.ViewModel
 {
@@ -19,7 +20,7 @@ namespace AdsBoard.ViewModel
                     switch (columnName)
                     {
                         case "Login":
-                            if (Login=="")
+                            if (Login == "")
                             {
                                 error = "Поле не должно быть пустым";
                             }
@@ -43,25 +44,52 @@ namespace AdsBoard.ViewModel
         class UserProfileVM : Model.UserProfile, IDataErrorInfo
         {
 
-
-            //public AccountVM Account { get; set; }
-
             public string this[string columnName]
             {
                 get
                 {
+                    Regex regex = new Regex(@"\w*@\w*\.\w{1,3}$");
+
                     string error = String.Empty;
                     switch (columnName)
                     {
                         case "FirstName":
+                            if (FirstName == string.Empty)
+                            {
+                                error = "Поле не может быть пустым";
+                            }
                             break;
                         case "SecondName":
+                            if (SecondName == string.Empty)
+                            {
+                                error = "Поле не может быть пустым";
+                            }
                             break;
                         case "Birthday":
+                            if (Birthday == null)
+                            {
+                                error = "Поле не может быть пустым";
+                            }
                             break;
                         case "PhoneNumber":
+                            if (PhoneNumber == string.Empty)
+                            {
+                                error = "Поле не может быть пустым";
+                            }
+                            if (PhoneNumber.Any(c => Char.IsLetter(c)))
+                            {
+                                error = "В номере телефона не могут быть указаны буквы";
+                            }
                             break;
                         case "EMail":
+                            if (EMail == string.Empty)
+                            {
+                                error = "Поле не может быть пустым";
+                            }
+                            else if (!regex.Match(EMail).Success)
+                            {
+                                error = "Указан не верный адрес электронной почты";
+                            }
                             break;
                     }
                     return error;
@@ -95,21 +123,9 @@ namespace AdsBoard.ViewModel
                     }
                     return error;
                 }
-
             }
 
             public string Error => throw new NotImplementedException();
-            /*
-            public int Id { get; set; }
-
-            public string Header { get; set; }
-            public string Text { get; set; }
-
-            public AccountVM Account { get; set; }
-
-            public Image MainImage { get; set; }
-            public ICollection<Image> Images { get; set; }*/
-
         }
 
         class ImageVM : Model.Image, IDataErrorInfo
