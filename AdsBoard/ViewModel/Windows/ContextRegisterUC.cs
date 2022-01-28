@@ -14,14 +14,34 @@ namespace AdsBoard.ViewModel.Windows
         public string retryPassword { get; set; }
         public ViewModelDBClass.UserProfileVM registeredUserProfile { get; set; } = new ViewModelDBClass.UserProfileVM();
 
-        public ContextRegisterUC()
+        //костыли
+        public Common.Commands.Command UpdatePasswordFild
         {
+            get
+            {
+                return new Common.Commands.Command(obj =>
+                {
 
+                    TextBox passwordTextBox = (TextBox)obj;
+
+                    passwordTextBox.Text = passwordTextBox.Text;
+
+                });
+            }
         }
-
-        public void CheckCoincidencePassword()
+        public Common.Commands.Command UpdateRetryPasswordFild
         {
+            get
+            {
+                return new Common.Commands.Command(obj =>
+                {
 
+                    TextBox retryPasswordTextBox = (TextBox)obj;
+
+                    retryPasswordTextBox.Text = retryPasswordTextBox.Text;
+
+                });
+            }
         }
 
         public Common.Commands.Command Cancel
@@ -41,7 +61,42 @@ namespace AdsBoard.ViewModel.Windows
             {
                 return new Common.Commands.Command(obj=> 
                 {
-                    MessageBox.Show(retryPassword);
+                    var mainWindow = (ViewModel.ContextMainWindow)Window.GetWindow((UserControl)obj).DataContext;
+
+                    var accounts = Model.DBModel.GetDBModel().GetAccounts();
+
+                    //Если такой логин отсутствует в базе а также пароль повторен правильно
+                    if (accounts.Any(a=>a.Login!= registeredAccount.Login))
+                    {
+                        if (registeredAccount.Password == retryPassword)
+                        {
+                            if (accounts.Where(a => a.UserProfile.EMail == registeredUserProfile.EMail).Count() == 0)
+                            {
+                                registeredAccount.UserProfile = registeredUserProfile;
+
+                                accounts.Add(registeredAccount);
+
+                                Model.DBModel.GetDBModel().Entry(registeredAccount).State = System.Data.Entity.EntityState.Added;
+
+                                Model.DBModel.GetDBModel().SaveChanges();
+
+                                mainWindow.MainWindowContent = new View.Windows.EnterUC();
+                            }
+                            else
+                            {
+                                MessageBox.Show("Указанная почта уже используется!");
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Пароль повторен не верно!");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Аккаунт с таким логином уже есть!");
+                    }
+
                 });
             }
         }

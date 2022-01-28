@@ -4,11 +4,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AdsBoard.View.Windows"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:ei="clr-namespace:Microsoft.Expression.Interactivity.Core;assembly=Microsoft.Expression.Interactions"
+             xmlns:Converters="clr-namespace:AdsBoard.Common.Converters"
              mc:Ignorable="d" 
              xmlns:ViewModel="clr-namespace:AdsBoard.ViewModel.Windows"
+             xmlns:ValidationRules="clr-namespace:AdsBoard.Common.ValidationRules"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <ViewModel:ContextRegisterUC x:Key="ContextRegisterUC"></ViewModel:ContextRegisterUC>
+        <Converters:MultiParamConverter x:Key="MultiParamConverter"></Converters:MultiParamConverter>
         <Style x:Key="ValidationTextBox" TargetType="TextBox">
             <Style.Triggers>
                 <Trigger Property="Validation.HasError" Value="True">
@@ -56,20 +61,31 @@
                             </Binding>
                         </TextBox.Text>
                     </TextBox>
-                    <TextBox DataContext="{Binding registeredAccount}" Width="150" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left">
+                    <TextBox Name="PasswordTextBox" Width="150" Grid.Row="1" Grid.Column="1" Style="{StaticResource ValidationTextBox}" HorizontalAlignment="Left">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="TextChanged">
+                                <i:InvokeCommandAction Command="{Binding UpdateRetryPasswordFild }" CommandParameter="{Binding ElementName=RetryPasswordTextBox}"></i:InvokeCommandAction>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
                         <TextBox.Text>
-                            <Binding Path="Password"  UpdateSourceTrigger="PropertyChanged">
+                            <Binding Path="registeredAccount.Password" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
                                 <Binding.ValidationRules>
-                                    <DataErrorValidationRule />
+                                    <DataErrorValidationRule ValidatesOnTargetUpdated="False"/>
                                 </Binding.ValidationRules>
                             </Binding>
                         </TextBox.Text>
                     </TextBox>
-                    <TextBox Width="150" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left">
+                    <TextBox Name="RetryPasswordTextBox" Width="150" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Style="{StaticResource ValidationTextBox}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="TextChanged">
+                                <i:InvokeCommandAction Command="{Binding UpdatePasswordFild}" CommandParameter="{Binding ElementName=PasswordTextBox}"></i:InvokeCommandAction>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
                         <TextBox.Text>
-                            <Binding Path="retryPassword"  UpdateSourceTrigger="PropertyChanged">
+                            <Binding Path="retryPassword" UpdateSourceTrigger="PropertyChanged"  Mode="TwoWay">
                                 <Binding.ValidationRules>
-                                    <DataErrorValidationRule />
+                                    <ValidationRules:CheckCoincidentRule ComparedTextBox="{x:Reference Name=PasswordTextBox}"></ValidationRules:CheckCoincidentRule>
+                                    <DataErrorValidationRule/>
                                 </Binding.ValidationRules>
                             </Binding>
                         </TextBox.Text>
@@ -101,18 +117,67 @@
                     <TextBlock Text="EMail:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center"></TextBlock>
 
 
-                    <TextBox Width="150" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"></TextBox>
-                    <TextBox Width="150" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left"></TextBox>
-                    <DatePicker Width="150"  Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" IsDropDownOpen="False" SelectedDateFormat="Short" />
-                    <TextBox Width="150" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left"></TextBox>
-                    <TextBox Width="150" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left"></TextBox>
+                    <TextBox DataContext="{Binding registeredUserProfile}" Width="150" Grid.Row="0" Grid.Column="1" Style="{StaticResource ValidationTextBox}" HorizontalAlignment="Left">
+                        <TextBox.Text>
+                            <Binding Path="FirstName"  UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <DataErrorValidationRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <TextBox DataContext="{Binding registeredUserProfile}" Width="150" Grid.Row="1" Grid.Column="1" Style="{StaticResource ValidationTextBox}" HorizontalAlignment="Left">
+                        <TextBox.Text>
+                            <Binding Path="SecondName"  UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <DataErrorValidationRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <DatePicker DataContext="{Binding registeredUserProfile}" Width="150"  Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" IsDropDownOpen="False" SelectedDateFormat="Short">
+                        <DatePicker.SelectedDate>
+                            <Binding Path="Birthday">
+                                <Binding.ValidationRules>
+                                    <DataErrorValidationRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </DatePicker.SelectedDate>
+                        <DatePicker.Style>
+                            <Style TargetType="DatePicker">
+                                <Style.Triggers>
+                                    <Trigger Property="Validation.HasError" Value="True">
+                                        <Setter Property="ToolTip" Value="{Binding Path=(Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Mode=Self}}"></Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DatePicker.Style>
+                    </DatePicker>
+                    <TextBox DataContext="{Binding registeredUserProfile}" Width="150" Grid.Row="3" Grid.Column="1" Style="{StaticResource ValidationTextBox}" HorizontalAlignment="Left">
+                        <TextBox.Text>
+                            <Binding Path="PhoneNumber"  UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <DataErrorValidationRule ValidatesOnTargetUpdated="False" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <TextBox DataContext="{Binding registeredUserProfile}" Width="150" Grid.Row="4" Grid.Column="1" Style="{StaticResource ValidationTextBox}" HorizontalAlignment="Left">
+                        <TextBox.Text>
+                            <Binding Path="EMail"  UpdateSourceTrigger="LostFocus">
+                                <Binding.ValidationRules>
+                                    <DataErrorValidationRule ValidatesOnTargetUpdated="False"/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
 
                 </Grid>
             </StackPanel>
         </GroupBox>
         <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" >
             <Button Command="{Binding Cancel}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}" Width="100" Height="30" Margin="0 0 10 0">Cancel</Button>
-            <Button Command="{Binding Ok}" Width="100" Height="30" Margin="0 0 10 0">Ok</Button>
+            <Button Command="{Binding Ok}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type UserControl}}}" Width="100" Height="30" Margin="0 0 10 0">Ok</Button>
         </StackPanel>
     </Grid>
 </UserControl>

@@ -95,6 +95,10 @@ namespace AdsBoard.Model
 
     class UserProfile
     {
+        public UserProfile()
+        {
+            Birthday = new DateTime(2000, 1, 1);
+        }
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string SecondName { get; set; }

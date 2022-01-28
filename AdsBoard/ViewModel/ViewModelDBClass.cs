@@ -20,13 +20,13 @@ namespace AdsBoard.ViewModel
                     switch (columnName)
                     {
                         case "Login":
-                            if (Login == "")
+                            if (Login == string.Empty)
                             {
                                 error = "Поле не должно быть пустым";
                             }
                             break;
                         case "Password":
-                            if (Password == "")
+                            if (Password == string.Empty)
                             {
                                 error = "Поле не должно быть пустым";
                             }
@@ -70,19 +70,24 @@ namespace AdsBoard.ViewModel
                             {
                                 error = "Поле не может быть пустым";
                             }
+                            if(Birthday.Date > DateTime.Now)
+                            {
+                                error = "Дата рождения должна быть в прошлом";
+                            }
+
                             break;
                         case "PhoneNumber":
-                            if (PhoneNumber == string.Empty)
+                            if (PhoneNumber == string.Empty || PhoneNumber==null)
                             {
                                 error = "Поле не может быть пустым";
                             }
-                            if (PhoneNumber.Any(c => Char.IsLetter(c)))
+                            else if (PhoneNumber.Any(c => Char.IsLetter(c)))
                             {
                                 error = "В номере телефона не могут быть указаны буквы";
                             }
                             break;
                         case "EMail":
-                            if (EMail == string.Empty)
+                            if (EMail == string.Empty || EMail == null)
                             {
                                 error = "Поле не может быть пустым";
                             }

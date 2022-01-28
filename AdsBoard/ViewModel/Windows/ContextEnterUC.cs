@@ -51,18 +51,6 @@ namespace AdsBoard.ViewModel.Windows
                         {
                             validationLoginToolTip.Content = string.Empty;
                             validationPasswordToolTip.Content = "Проверьте правильность введенного пароля";
-
-                            /*
-                            MessageBox.Show("Denied+Create");
-
-                            var newUserProfile = new ViewModel.ViewModelDBClass.UserProfileVM { FirstName = "Slava", SecondName = "Shishkin", Birthday = new DateTime(1988, 2, 9), EMail = "abrakadabra@mail.ru", PhoneNumber = "123123123" };
-                            var newAccount = new ViewModel.ViewModelDBClass.AccountVM { Login = enteringAccountInform.Login, Password = "1111", UserProfile = newUserProfile };
-
-                            accounts.Add(newAccount);
-
-                            Model.DBModel.GetDBModel().Entry(newAccount).State = System.Data.Entity.EntityState.Added;
-
-                            Model.DBModel.GetDBModel().SaveChanges();*/
                         }
                     }
                     else
