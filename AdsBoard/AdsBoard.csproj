@@ -47,6 +47,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -72,23 +74,12 @@
     <Compile Include="Common\Converters\CheckEmptyStringConverter.cs" />
     <Compile Include="Common\Converters\CheckNullConverter.cs" />
     <Compile Include="Common\Converters\MultiParamConverter.cs" />
+    <Compile Include="Common\CurrentUser.cs" />
     <Compile Include="Common\Notify.cs" />
     <Compile Include="Common\ValidationRules\CheckCoincidentRule.cs" />
-    <Compile Include="Migrations\202201261405082_add Birthday.cs" />
-    <Compile Include="Migrations\202201261405082_add Birthday.Designer.cs">
-      <DependentUpon>202201261405082_add Birthday.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202201261421358_add inheritance DB class to ViewModel.cs" />
-    <Compile Include="Migrations\202201261421358_add inheritance DB class to ViewModel.Designer.cs">
-      <DependentUpon>202201261421358_add inheritance DB class to ViewModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202201261444415_add inheritance DB class to ViewModel2.cs" />
-    <Compile Include="Migrations\202201261444415_add inheritance DB class to ViewModel2.Designer.cs">
-      <DependentUpon>202201261444415_add inheritance DB class to ViewModel2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202201271358235_Encrypt password.cs" />
-    <Compile Include="Migrations\202201271358235_Encrypt password.Designer.cs">
-      <DependentUpon>202201271358235_Encrypt password.cs</DependentUpon>
+    <Compile Include="Migrations\202201290750104_add Price.cs" />
+    <Compile Include="Migrations\202201290750104_add Price.Designer.cs">
+      <DependentUpon>202201290750104_add Price.cs</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\Windows\ContextAdCreateUC.cs" />
     <Compile Include="ViewModel\Windows\ContextAdsUC.cs" />
@@ -155,17 +146,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\202201261405082_add Birthday.resx">
-      <DependentUpon>202201261405082_add Birthday.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202201261421358_add inheritance DB class to ViewModel.resx">
-      <DependentUpon>202201261421358_add inheritance DB class to ViewModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202201261444415_add inheritance DB class to ViewModel2.resx">
-      <DependentUpon>202201261444415_add inheritance DB class to ViewModel2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202201271358235_Encrypt password.resx">
-      <DependentUpon>202201271358235_Encrypt password.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202201290750104_add Price.resx">
+      <DependentUpon>202201290750104_add Price.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

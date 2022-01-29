@@ -13,7 +13,7 @@
     <UserControl.DataContext>
         <Binding Source="{StaticResource ContextAdsUC}"></Binding>
     </UserControl.DataContext>
-    <Grid>
-            
+    <Grid Background="WhiteSmoke">
+        <Button Content="Create Ad" Command="{Binding NewCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"></Button>
     </Grid>
 </UserControl>

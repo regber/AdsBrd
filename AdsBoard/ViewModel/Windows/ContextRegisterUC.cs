@@ -14,6 +14,12 @@ namespace AdsBoard.ViewModel.Windows
         public string retryPassword { get; set; }
         public ViewModelDBClass.UserProfileVM registeredUserProfile { get; set; } = new ViewModelDBClass.UserProfileVM();
 
+        public ContextRegisterUC()
+        {
+            System.Windows.Application.Current.MainWindow.Width = 700;
+            System.Windows.Application.Current.MainWindow.Height = 300;
+        }
+
         //костыли
         public Common.Commands.Command UpdatePasswordFild
         {
@@ -65,9 +71,10 @@ namespace AdsBoard.ViewModel.Windows
 
                     var accounts = Model.DBModel.GetDBModel().GetAccounts();
 
-                    //Если такой логин отсутствует в базе а также пароль повторен правильно
-                    if (accounts.Any(a=>a.Login!= registeredAccount.Login))
+                    //Если такой логин отсутствует в базе
+                    if (!accounts.Any(a=>a.Login == registeredAccount.Login))
                     {
+                        //если пароль повторен правильно
                         if (registeredAccount.Password == retryPassword)
                         {
                             if (accounts.Where(a => a.UserProfile.EMail == registeredUserProfile.EMail).Count() == 0)

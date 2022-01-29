@@ -58,6 +58,7 @@ namespace AdsBoard.Model
             modelBuilder.Entity<UserProfile>().Property(p => p.EMail).IsRequired();
 
             modelBuilder.Entity<Ad>().HasRequired(ad => ad.Account).WithMany(a => a.Ads).WillCascadeOnDelete(true);
+            modelBuilder.Entity<Ad>().Property(ad => ad.Price).IsRequired();
 
             modelBuilder.Entity<Image>().HasRequired(i => i.Ad).WithOptional(ad => ad.MainImage).WillCascadeOnDelete(true);
             modelBuilder.Entity<Image>().HasRequired(i => i.Ad).WithMany(ad => ad.Images);
@@ -117,6 +118,8 @@ namespace AdsBoard.Model
 
         public string Header { get; set; }
         public string Text { get; set; }
+
+        public double Price { get; set; }
 
         public Account Account { get; set; }
 

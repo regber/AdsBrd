@@ -3,7 +3,7 @@ namespace AdsBoard.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Encryptpassword : DbMigration
+    public partial class addPrice : DbMigration
     {
         public override void Up()
         {
@@ -25,6 +25,7 @@ namespace AdsBoard.Migrations
                         Id = c.Int(nullable: false, identity: true),
                         Header = c.String(),
                         Text = c.String(),
+                        Price = c.Double(nullable: false),
                         Discriminator = c.String(nullable: false, maxLength: 128),
                         Account_Id = c.Int(nullable: false),
                         MainImage_Id = c.Int(),

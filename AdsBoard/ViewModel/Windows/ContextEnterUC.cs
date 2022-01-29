@@ -19,6 +19,9 @@ namespace AdsBoard.ViewModel.Windows
 
         public ContextEnterUC()
         {
+            System.Windows.Application.Current.MainWindow.Width = 600;
+            System.Windows.Application.Current.MainWindow.Height = 450;
+
             //enteringAccountInform 
             accounts = Model.DBModel.GetDBModel().GetAccounts();
         }
@@ -44,6 +47,9 @@ namespace AdsBoard.ViewModel.Windows
                         {
                             validationLoginToolTip.Content=string.Empty;
                             validationPasswordToolTip.Content = string.Empty;
+
+                            Common.CurrentUser.CurrentAccount = (ViewModelDBClass.AccountVM)currentAccount;
+                            Common.CurrentUser.CurrentUserProfile= (ViewModelDBClass.UserProfileVM)currentAccount.UserProfile;
 
                             mainWindow.MainWindowContent = new View.Windows.AdsUC();
                         }

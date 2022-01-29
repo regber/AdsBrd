@@ -7,13 +7,13 @@ namespace AdsBoard.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class addBirthday : IMigrationMetadata
+    public sealed partial class addPrice : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(addBirthday));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(addPrice));
         
         string IMigrationMetadata.Id
         {
-            get { return "202201261405082_add Birthday"; }
+            get { return "202201290750104_add Price"; }
         }
         
         string IMigrationMetadata.Source
