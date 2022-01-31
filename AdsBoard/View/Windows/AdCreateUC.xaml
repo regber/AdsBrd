@@ -3,12 +3,21 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:Common="clr-namespace:AdsBoard.Common"
              xmlns:local="clr-namespace:AdsBoard.View.Windows"
              mc:Ignorable="d" 
              xmlns:ViewModel="clr-namespace:AdsBoard.ViewModel.Windows"
              d:DesignHeight="500" d:DesignWidth="800">
     <UserControl.Resources>
         <ViewModel:ContextAdCreateUC x:Key="ContextAdCreateUC"></ViewModel:ContextAdCreateUC>
+        <Style x:Key="ValidationTextBox" TargetType="TextBox">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(Validation.Errors)[0].ErrorContent}">
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
     <UserControl.DataContext>
         <Binding Source="{StaticResource ContextAdCreateUC}"></Binding>
@@ -19,7 +28,15 @@
                 <StackPanel Orientation="Vertical" DockPanel.Dock="Top">
                     <DockPanel>
                         <TextBlock Text="Header:" FontSize="16" VerticalAlignment="Center"></TextBlock>
-                        <TextBox></TextBox>
+                        <TextBox DataContext="{Binding Ad}" Style="{StaticResource ValidationTextBox}">
+                            <TextBox.Text>
+                                <Binding Path="Header" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <DataErrorValidationRule />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
                     </DockPanel>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -29,16 +46,14 @@
                         <DockPanel Grid.Column="0" Margin="2">
                             <TextBlock Text="Main image" Height="30" FontSize="20" HorizontalAlignment="Center" DockPanel.Dock="Top"></TextBlock>
                             <Border BorderThickness="1" BorderBrush="Black" DockPanel.Dock="Bottom">
-                                <Image Height="200" >
-                                    <!--Image.Source>
-                                    <BitmapImage></BitmapImage>
-                                </Image.Source-->
+                                <Image Source="{Binding SelectedMainAdImage, UpdateSourceTrigger=PropertyChanged}" Height="200" >
+
                                 </Image>
                             </Border>
                         </DockPanel>
                         <DockPanel Grid.Column="1" LastChildFill="True" Margin="2">
                             <StackPanel DockPanel.Dock="Top">
-                                <Button Command="{Binding AddImagesCommand}" Height="30" Width="150" HorizontalAlignment="Right">
+                                <Button Command="{Binding AddImagesCommand}"  Height="30" Width="150" HorizontalAlignment="Right">
                                     <Button.Content>
                                         <Viewbox>
                                             <TextBlock Text="Add Images"></TextBlock>
@@ -47,7 +62,7 @@
                                 </Button>
                             </StackPanel>
                             <Border BorderBrush="Black" BorderThickness="1" Height="200">
-                                <ListBox Background="DarkGray" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  ItemsSource="{Binding AdImages, UpdateSourceTrigger=PropertyChanged}">
+                                <ListBox Background="DarkGray" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectedValue="{Binding SelectedMainAdImage}"  ItemsSource="{Binding AdImages, UpdateSourceTrigger=PropertyChanged}">
                                     <ListBox.ItemsPanel>
                                         <ItemsPanelTemplate>
                                             <UniformGrid  Columns="3"/>
@@ -55,10 +70,9 @@
                                     </ListBox.ItemsPanel>
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
-                                            <Border Width="150" MaxHeight="100" BorderBrush="BlanchedAlmond"  BorderThickness="2" VerticalAlignment="Stretch">
-
+                                            <Border  Width="150" MaxHeight="100" BorderBrush="BlanchedAlmond"  BorderThickness="2" VerticalAlignment="Stretch">
                                                 <Grid Width="150" Height="100">
-                                                    <Viewbox>
+                                                    <Viewbox Name="view">
                                                         <Image Source="{Binding}"></Image>
                                                         <Viewbox.ContextMenu>
                                                             <ContextMenu DataContext="{StaticResource ContextAdCreateUC}">
@@ -85,10 +99,18 @@
                         </Grid.RowDefinitions>
                         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
                             <TextBlock VerticalAlignment="Center" >Price</TextBlock>
-                            <TextBox Width="200" VerticalAlignment="Center"></TextBox>
+                            <TextBox  Text="{Binding Ad.Price,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay, StringFormat={}{0:N}}" Style="{StaticResource ValidationTextBox}" Width="200" VerticalAlignment="Center"></TextBox>
                         </StackPanel>
                         <GroupBox Header="Text" Grid.Row="1">
-                            <RichTextBox  FontSize="12"></RichTextBox>
+                            <TextBox DataContext="{Binding Ad}" Style="{StaticResource ValidationTextBox }">
+                                <TextBox.Text>
+                                    <Binding Path="Text" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <DataErrorValidationRule />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
                         </GroupBox>
                         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
                             <Button Command="{Binding CancelCommand}" Margin="2 2 20 2" Width="100">Cancel</Button>

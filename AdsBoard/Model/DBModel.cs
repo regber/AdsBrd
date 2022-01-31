@@ -115,11 +115,10 @@ namespace AdsBoard.Model
     class Ad
     {
         public int Id { get; set; }
-
         public string Header { get; set; }
         public string Text { get; set; }
 
-        public double Price { get; set; }
+        public int Price { get; set; }
 
         public Account Account { get; set; }
 

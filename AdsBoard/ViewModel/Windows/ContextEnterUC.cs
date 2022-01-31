@@ -48,6 +48,7 @@ namespace AdsBoard.ViewModel.Windows
                             validationLoginToolTip.Content=string.Empty;
                             validationPasswordToolTip.Content = string.Empty;
 
+                            //Заполняем свойства CurrentUser текущими данными пользователя и его логина
                             Common.CurrentUser.CurrentAccount = (ViewModelDBClass.AccountVM)currentAccount;
                             Common.CurrentUser.CurrentUserProfile= (ViewModelDBClass.UserProfileVM)currentAccount.UserProfile;
 

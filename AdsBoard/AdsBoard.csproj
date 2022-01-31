@@ -81,6 +81,14 @@
     <Compile Include="Migrations\202201290750104_add Price.Designer.cs">
       <DependentUpon>202201290750104_add Price.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202201301149516_change price type.cs" />
+    <Compile Include="Migrations\202201301149516_change price type.Designer.cs">
+      <DependentUpon>202201301149516_change price type.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202201301546067_change price type #2.cs" />
+    <Compile Include="Migrations\202201301546067_change price type #2.Designer.cs">
+      <DependentUpon>202201301546067_change price type #2.cs</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\Windows\ContextAdCreateUC.cs" />
     <Compile Include="ViewModel\Windows\ContextAdsUC.cs" />
     <Compile Include="ViewModel\Windows\ContextEnterUC.cs" />
@@ -148,6 +156,12 @@
     </Compile>
     <EmbeddedResource Include="Migrations\202201290750104_add Price.resx">
       <DependentUpon>202201290750104_add Price.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201301149516_change price type.resx">
+      <DependentUpon>202201301149516_change price type.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201301546067_change price type #2.resx">
+      <DependentUpon>202201301546067_change price type #2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

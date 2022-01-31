@@ -115,15 +115,23 @@ namespace AdsBoard.ViewModel
                     string error = String.Empty;
                     switch (columnName)
                     {
-                        case "FirstName":
+                        case nameof(Header):
+                            if(Header==string.Empty)
+                            {
+                                error = "Поле не может быть пустым";
+                            }
                             break;
-                        case "SecondName":
+                        case nameof(Text):
+                            if(Text == string.Empty)
+                            {
+                                error = "Поле не может быть пустым";
+                            }
                             break;
-                        case "Birthday":
-                            break;
-                        case "PhoneNumber":
-                            break;
-                        case "EMail":
+                        case nameof(Price):
+                            if (Price <=0)
+                            {
+                                error = "Цена должна быть больше нуля";
+                            }
                             break;
                     }
                     return error;
@@ -131,41 +139,6 @@ namespace AdsBoard.ViewModel
             }
 
             public string Error => throw new NotImplementedException();
-        }
-
-        class ImageVM : Model.Image, IDataErrorInfo
-        {
-            public string this[string columnName]
-            {
-                get
-                {
-                    string error = String.Empty;
-                    switch (columnName)
-                    {
-                        case "FirstName":
-                            break;
-                        case "SecondName":
-                            break;
-                        case "Birthday":
-                            break;
-                        case "PhoneNumber":
-                            break;
-                        case "EMail":
-                            break;
-                    }
-                    return error;
-                }
-
-            }
-
-            public string Error => throw new NotImplementedException();
-            /*
-            public int Id { get; set; }
-
-            public string ImagePath { get; set; }
-
-            public Ad Ad { get; set; }*/
-
         }
     }
 }

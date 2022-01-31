@@ -6,14 +6,24 @@
              xmlns:local="clr-namespace:AdsBoard.View.Windows"
              mc:Ignorable="d" 
              xmlns:ViewModel="clr-namespace:AdsBoard.ViewModel.Windows"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800" Background="WhiteSmoke">
     <UserControl.Resources>
         <ViewModel:ContextAdsUC x:Key="ContextAdsUC"></ViewModel:ContextAdsUC>
     </UserControl.Resources>
     <UserControl.DataContext>
         <Binding Source="{StaticResource ContextAdsUC}"></Binding>
     </UserControl.DataContext>
-    <Grid Background="WhiteSmoke">
-        <Button Content="Create Ad" Command="{Binding NewCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"></Button>
-    </Grid>
+    <GroupBox Header="Ads" Margin="3">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition  Height="30"/>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <DockPanel>
+                <!--Button HorizontalAlignment="Right" Width="100" Content="Create Ad" Command="{Binding NewCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"></Button-->
+                <Button HorizontalAlignment="Right" Width="100" Content="My Ads" Command="{Binding NewCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"></Button>
+            </DockPanel>
+        </Grid>
+    </GroupBox>
 </UserControl>
