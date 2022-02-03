@@ -21,6 +21,10 @@ namespace AdsBoard.ViewModel.Windows
 
         public ObservableCollection<string> AdImages { get; set; } = new ObservableCollection<string>();
 
+        public List<string> DriverList { get; set; } = new List<string> { "front-wheel drive", "rear-wheel drive", "four-wheel drive" };
+        public List<string> FuelTypeList { get; set; } = new List<string> { "gasoline", "diesel" };
+        public List<string> TransmissionTypeList { get; set; } = new List<string> { "automatic", "manual" };
+
         private string _SelectedMainAdImage;
         public string SelectedMainAdImage 
         {
@@ -132,7 +136,9 @@ namespace AdsBoard.ViewModel.Windows
                     List<Model.Image> imageList = new List<Model.Image>();
                     Model.Image mainImage = new Model.Image();
 
-                    var newAd = new Model.Ad { Account = Common.CurrentUser.CurrentAccount, Header = Ad.Header, Price = Ad.Price, Text = Ad.Text};
+
+                    Ad.Account = Common.CurrentUser.CurrentAccount;
+                    var newAd = Ad;
 
                     //add ad
                     Model.DBModel.GetDBModel().Ads.Add(newAd);

@@ -18,6 +18,14 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <Style x:Key="ValidationComboBox" TargetType="ComboBox">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(Validation.Errors)[0].ErrorContent}">
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
     <UserControl.DataContext>
         <Binding Source="{StaticResource ContextAdCreateUC}"></Binding>
@@ -90,18 +98,53 @@
                     </Grid>
 
                 </StackPanel>
+                <DockPanel   DockPanel.Dock="Top">
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <DockPanel Grid.Row="0" Margin="2">
+                            <TextBlock Text="Producer:"  Margin="0 0 10 0"></TextBlock>
+                            <TextBox Text="{Binding Ad.Producer,UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}"  Width="150" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource ValidationTextBox}"></TextBox>
+
+                            <TextBlock Text="Car Model:"  Margin="10 0 10 0"></TextBlock>
+                            <TextBox  Text="{Binding Ad.Model,UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" Width="150" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource ValidationTextBox}"></TextBox>
+
+                        </DockPanel>
+                        <DockPanel Grid.Row="1" Margin="2">
+                            <TextBlock  VerticalAlignment="Center"  Text="Price:"></TextBlock>
+                            <TextBox  HorizontalAlignment="Left" Text="{Binding Ad.Price,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay, StringFormat={}{0:N}}" Style="{StaticResource ValidationTextBox}" Width="120" VerticalAlignment="Center"></TextBox>
+
+                            <TextBlock Text="Release year:"  Margin="10 0 10 0"></TextBlock>
+                            <TextBox  Text="{Binding Ad.ReleaseYear,UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" Width="80" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource ValidationTextBox}"></TextBox>
+
+                            <TextBlock Text="Transmission:"  Margin="10 0 10 0"></TextBlock>
+                            <ComboBox  SelectedValue="{Binding Ad.Transmission,UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}"  ItemsSource="{Binding TransmissionTypeList}" Width="100" VerticalAlignment="Center" Style="{StaticResource ValidationComboBox}" HorizontalAlignment="Stretch"></ComboBox>
+                            
+                            <TextBlock Text="Fuel type:"  Margin="10 0 10 0"></TextBlock>
+                            <ComboBox  SelectedValue="{Binding Ad.FuelType,UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" ItemsSource="{Binding FuelTypeList}"  VerticalAlignment="Center" HorizontalAlignment="Stretch" Style="{StaticResource ValidationComboBox}"></ComboBox>
+                        </DockPanel>
+                        <DockPanel Grid.Row="2" Margin="2">
+                            <TextBlock Text="Engine volume:"  Margin="0 0 10 0"></TextBlock>
+                            <TextBox  Text="{Binding Ad.EngineVolume,UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True ,StringFormat={}{0:N}}" Width="80" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource ValidationTextBox}"></TextBox>
+
+                            <TextBlock Text="Drive:"  Margin="10 0 10 0"></TextBlock>
+                            <ComboBox ItemsSource="{Binding DriverList,UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" SelectedValue="{Binding Ad.Drive}" Width="150" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource ValidationComboBox}"></ComboBox>
+                        </DockPanel>
+
+
+                    </Grid>
+
+                </DockPanel>
                 <DockPanel DockPanel.Dock="Bottom">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="30"></RowDefinition>
                             <RowDefinition></RowDefinition>
                             <RowDefinition Height="30"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
-                            <TextBlock VerticalAlignment="Center" >Price</TextBlock>
-                            <TextBox  Text="{Binding Ad.Price,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay, StringFormat={}{0:N}}" Style="{StaticResource ValidationTextBox}" Width="200" VerticalAlignment="Center"></TextBox>
-                        </StackPanel>
-                        <GroupBox Header="Text" Grid.Row="1">
+                        <GroupBox Header="Text" Grid.Row="0">
                             <TextBox DataContext="{Binding Ad}" Style="{StaticResource ValidationTextBox }">
                                 <TextBox.Text>
                                     <Binding Path="Text" UpdateSourceTrigger="PropertyChanged">
@@ -112,7 +155,7 @@
                                 </TextBox.Text>
                             </TextBox>
                         </GroupBox>
-                        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
                             <Button Command="{Binding CancelCommand}" Margin="2 2 20 2" Width="100">Cancel</Button>
                             <Button Command="{Binding OkCommand}" Margin="2" Width="100">Ok</Button>
                         </StackPanel>

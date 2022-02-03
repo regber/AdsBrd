@@ -213,7 +213,7 @@ namespace AdsBoard.Model
         public string Producer { get; set; }
         public string Model { get; set; }
         public double EngineVolume { get; set; }
-        public int RealeaseYear { get; set; }
+        public int ReleaseYear { get; set; }
         public string Drive { get; set; }
         public string Transmission { get; set; }
         public string FuelType { get; set; }
@@ -269,8 +269,8 @@ namespace AdsBoard.Model
                             error = "Значение должно быть больше нуля";
                         }
                         break;
-                    case nameof(RealeaseYear):
-                        if (RealeaseYear == 0)
+                    case nameof(ReleaseYear):
+                        if (ReleaseYear == 0)
                         {
                             error = "Укажите значение";
                         }

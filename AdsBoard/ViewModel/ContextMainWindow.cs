@@ -27,8 +27,9 @@ namespace AdsBoard.ViewModel
 
         public ContextMainWindow()
         {
-            //MainWindowContent = new View.Windows.EnterUC();
-            MainWindowContent = new View.Windows.AdsUC();
+            MainWindowContent = new View.Windows.EnterUC();
+            //MainWindowContent = new View.Windows.AdsUC();
+            //MainWindowContent = new View.Windows.AdCreateUC();
         }
     }
 }

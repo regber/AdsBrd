@@ -4,9 +4,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AdsBoard.View.Windows"
+             xmlns:ViewModel="clr-namespace:AdsBoard.ViewModel.Windows"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ViewModel:ContextMyAds x:Key="ContextMyAds"></ViewModel:ContextMyAds>
+    </UserControl.Resources>
+    <UserControl.DataContext>
+        <Binding Source="{StaticResource ContextMyAds}"></Binding>
+    </UserControl.DataContext>
     <Grid>
-            
+        <Button Content="123" Command="{Binding  CreateNewAd}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type UserControl}}}"></Button>
     </Grid>
 </UserControl>

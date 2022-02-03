@@ -93,6 +93,14 @@
     <Compile Include="Migrations\202202031118376_change model.Designer.cs">
       <DependentUpon>202202031118376_change model.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202202031212061_change ad to ad for cars.cs" />
+    <Compile Include="Migrations\202202031212061_change ad to ad for cars.Designer.cs">
+      <DependentUpon>202202031212061_change ad to ad for cars.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202202031251426_edited field name.cs" />
+    <Compile Include="Migrations\202202031251426_edited field name.Designer.cs">
+      <DependentUpon>202202031251426_edited field name.cs</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\Windows\ContextAdCreateUC.cs" />
     <Compile Include="ViewModel\Windows\ContextAdsUC.cs" />
     <Compile Include="ViewModel\Windows\ContextEnterUC.cs" />
@@ -176,6 +184,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202202031118376_change model.resx">
       <DependentUpon>202202031118376_change model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202031212061_change ad to ad for cars.resx">
+      <DependentUpon>202202031212061_change ad to ad for cars.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202031251426_edited field name.resx">
+      <DependentUpon>202202031251426_edited field name.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
