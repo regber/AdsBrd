@@ -10,9 +10,9 @@ namespace AdsBoard.ViewModel.Windows
 {
     class ContextRegisterUC
     {
-        public ViewModelDBClass.AccountVM registeredAccount { get; set; } = new ViewModelDBClass.AccountVM();
+        public Model.Account registeredAccount { get; set; } = new Model.Account();
         public string retryPassword { get; set; }
-        public ViewModelDBClass.UserProfileVM registeredUserProfile { get; set; } = new ViewModelDBClass.UserProfileVM();
+        public Model.UserProfile registeredUserProfile { get; set; } = new Model.UserProfile();
 
         public ContextRegisterUC()
         {

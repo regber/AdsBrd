@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
+using System.ComponentModel;
+using System.Text.RegularExpressions;
 
 
 namespace AdsBoard.Model
@@ -32,7 +34,7 @@ namespace AdsBoard.Model
         }
         public List<Ad> GetAds()
         {
-            var ads = thisDBModel.Ads.Include(ad=>ad.Account).Include(ad=>ad.MainImage).Include(ad=>ad.Images).ToList();
+            var ads = thisDBModel.Ads.Include(ad=>ad.Account).Include(ad=>ad.MainImage).Include(ad=>ad.Images).Include(ad=>ad.Account.UserProfile).ToList();
 
             return ads;
         }
@@ -71,7 +73,7 @@ namespace AdsBoard.Model
         public DbSet<Ad> Ads { get; set; }
         public DbSet<Image> Images { get; set; }
     }
-    class Account
+    class Account: IDataErrorInfo
     {
 
         public int Id { get; set; }
@@ -92,9 +94,37 @@ namespace AdsBoard.Model
 
         public UserProfile UserProfile { get; set; }
         public ICollection<Ad> Ads { get; set; }
+
+        public string this[string columnName]
+        {
+            get
+            {
+                string error = String.Empty;
+                switch (columnName)
+                {
+                    case "Login":
+                        if (Login == string.Empty)
+                        {
+                            error = "Поле не должно быть пустым";
+                        }
+                        break;
+                    case "Password":
+                        if (Password == string.Empty)
+                        {
+                            error = "Поле не должно быть пустым";
+                        }
+                        break;
+                }
+                return error;
+            }
+        }
+        public string Error
+        {
+            get { throw new NotImplementedException(); }
+        }
     }
 
-    class UserProfile
+    class UserProfile: IDataErrorInfo
     {
         public UserProfile()
         {
@@ -110,9 +140,70 @@ namespace AdsBoard.Model
         public string EMail { get; set; }
 
         public Account Account { get; set; }
+
+
+        public string this[string columnName]
+        {
+            get
+            {
+                Regex regex = new Regex(@"\w*@\w*\.\w{1,3}$");
+
+                string error = String.Empty;
+                switch (columnName)
+                {
+                    case "FirstName":
+                        if (FirstName == string.Empty)
+                        {
+                            error = "Поле не может быть пустым";
+                        }
+                        break;
+                    case "SecondName":
+                        if (SecondName == string.Empty)
+                        {
+                            error = "Поле не может быть пустым";
+                        }
+                        break;
+                    case "Birthday":
+                        if (Birthday == null)
+                        {
+                            error = "Поле не может быть пустым";
+                        }
+                        if (Birthday.Date > DateTime.Now)
+                        {
+                            error = "Дата рождения должна быть в прошлом";
+                        }
+
+                        break;
+                    case "PhoneNumber":
+                        if (PhoneNumber == string.Empty || PhoneNumber == null)
+                        {
+                            error = "Поле не может быть пустым";
+                        }
+                        else if (PhoneNumber.Any(c => Char.IsLetter(c)))
+                        {
+                            error = "В номере телефона не могут быть указаны буквы";
+                        }
+                        break;
+                    case "EMail":
+                        if (EMail == string.Empty || EMail == null)
+                        {
+                            error = "Поле не может быть пустым";
+                        }
+                        else if (!regex.Match(EMail).Success)
+                        {
+                            error = "Указан не верный адрес электронной почты";
+                        }
+                        break;
+                }
+                return error;
+            }
+
+        }
+
+        public string Error => throw new NotImplementedException();
     }
 
-    class Ad
+    class Ad: IDataErrorInfo
     {
         public int Id { get; set; }
         public string Header { get; set; }
@@ -124,6 +215,39 @@ namespace AdsBoard.Model
 
         public Image MainImage { get; set; }
         public ICollection<Image> Images { get; set; }
+
+
+        public string this[string columnName]
+        {
+            get
+            {
+                string error = String.Empty;
+                switch (columnName)
+                {
+                    case nameof(Header):
+                        if (Header == string.Empty)
+                        {
+                            error = "Поле не может быть пустым";
+                        }
+                        break;
+                    case nameof(Text):
+                        if (Text == string.Empty)
+                        {
+                            error = "Поле не может быть пустым";
+                        }
+                        break;
+                    case nameof(Price):
+                        if (Price <= 0)
+                        {
+                            error = "Цена должна быть больше нуля";
+                        }
+                        break;
+                }
+                return error;
+            }
+        }
+
+        public string Error => throw new NotImplementedException();
 
     }
 

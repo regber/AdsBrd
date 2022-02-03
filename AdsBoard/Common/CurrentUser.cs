@@ -8,7 +8,7 @@ namespace AdsBoard.Common
 {
     class CurrentUser
     {
-        public static ViewModel.ViewModelDBClass.AccountVM CurrentAccount { get; set; } = new ViewModel.ViewModelDBClass.AccountVM();
-        public static ViewModel.ViewModelDBClass.UserProfileVM CurrentUserProfile { get; set; } = new ViewModel.ViewModelDBClass.UserProfileVM();
+        public static Model.Account CurrentAccount { get; set; } = new Model.Account();
+        public static Model.UserProfile CurrentUserProfile { get; set; } = new Model.UserProfile();
     }
 }

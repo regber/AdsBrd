@@ -17,7 +17,7 @@ namespace AdsBoard.ViewModel.Windows
 {
     class ContextAdCreateUC:Common.Notify
     {
-        public ViewModelDBClass.AdVM Ad { get; set; } = new ViewModelDBClass.AdVM();
+        public Model.Ad Ad { get; set; } = new Model.Ad();
 
         public ObservableCollection<string> AdImages { get; set; } = new ObservableCollection<string>();
 

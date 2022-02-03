@@ -89,9 +89,14 @@
     <Compile Include="Migrations\202201301546067_change price type #2.Designer.cs">
       <DependentUpon>202201301546067_change price type #2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202202031118376_change model.cs" />
+    <Compile Include="Migrations\202202031118376_change model.Designer.cs">
+      <DependentUpon>202202031118376_change model.cs</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\Windows\ContextAdCreateUC.cs" />
     <Compile Include="ViewModel\Windows\ContextAdsUC.cs" />
     <Compile Include="ViewModel\Windows\ContextEnterUC.cs" />
+    <Compile Include="ViewModel\Windows\ContextMyAds.cs" />
     <Compile Include="ViewModel\Windows\ContextRegisterUC.cs" />
     <Compile Include="View\Windows\AdCreateUC.xaml.cs">
       <DependentUpon>AdCreateUC.xaml</DependentUpon>
@@ -101,6 +106,9 @@
     </Compile>
     <Compile Include="View\Windows\EnterUC.xaml.cs">
       <DependentUpon>EnterUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\MyAdsUC.xaml.cs">
+      <DependentUpon>MyAdsUC.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Windows\RegisterUC.xaml.cs">
       <DependentUpon>RegisterUC.xaml</DependentUpon>
@@ -114,7 +122,6 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\DBModel.cs" />
     <Compile Include="ViewModel\ContextMainWindow.cs" />
-    <Compile Include="ViewModel\ViewModelDBClass.cs" />
     <Compile Include="View\App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -132,6 +139,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Windows\EnterUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\MyAdsUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -162,6 +173,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202201301546067_change price type #2.resx">
       <DependentUpon>202201301546067_change price type #2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202031118376_change model.resx">
+      <DependentUpon>202202031118376_change model.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

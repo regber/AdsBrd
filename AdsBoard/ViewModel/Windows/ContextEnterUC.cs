@@ -15,7 +15,7 @@ namespace AdsBoard.ViewModel.Windows
         public ToolTip validationLoginToolTip { get; set; } = new ToolTip();
         public ToolTip validationPasswordToolTip { get; set; } = new ToolTip();
 
-        public ViewModelDBClass.AccountVM enteringAccountInform { get; set; } = new ViewModelDBClass.AccountVM();
+        public Model.Account enteringAccountInform { get; set; } = new Model.Account();
 
         public ContextEnterUC()
         {
@@ -49,8 +49,8 @@ namespace AdsBoard.ViewModel.Windows
                             validationPasswordToolTip.Content = string.Empty;
 
                             //Заполняем свойства CurrentUser текущими данными пользователя и его логина
-                            Common.CurrentUser.CurrentAccount = (ViewModelDBClass.AccountVM)currentAccount;
-                            Common.CurrentUser.CurrentUserProfile= (ViewModelDBClass.UserProfileVM)currentAccount.UserProfile;
+                            Common.CurrentUser.CurrentAccount = currentAccount;
+                            Common.CurrentUser.CurrentUserProfile= currentAccount.UserProfile;
 
                             mainWindow.MainWindowContent = new View.Windows.AdsUC();
                         }

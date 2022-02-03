@@ -17,13 +17,71 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition  Height="30"/>
-                <RowDefinition />
+                <RowDefinition Height="50" />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <DockPanel>
-                <!--Button HorizontalAlignment="Right" Width="100" Content="Create Ad" Command="{Binding NewCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"></Button-->
-                <Button HorizontalAlignment="Right" Width="100" Content="My Ads" Command="{Binding NewCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"></Button>
-            </DockPanel>
+            <!--Button HorizontalAlignment="Right" Width="100" Content="Create Ad" Command="{Binding NewCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"></Button-->
+            <Button HorizontalAlignment="Right" Width="100" FontSize="16" Content="My Ads" Command="{Binding MyAdsCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"></Button>
+            <GroupBox Header="Ads Filter" Grid.Row="1" >
+                <DockPanel>
+                    <TextBlock  Text="Saler:" Margin="0 0 10 0" VerticalAlignment="Center" FontSize="16"></TextBlock>
+                    <ComboBox   Width="160" HorizontalAlignment="Left" VerticalAlignment="Center" ItemsSource="{Binding salers}"></ComboBox>
+                    <TextBlock Text="Price:" Margin="10 0 10 0" VerticalAlignment="Center" FontSize="16"></TextBlock>
+                    <TextBox Width="160" HorizontalAlignment="Left"></TextBox>
+                    <Button Content="Find" FontSize="16" Width="100" VerticalAlignment="Center" HorizontalAlignment="Right"></Button>
+                </DockPanel>
+            </GroupBox>
+            <ListBox Grid.Row="2" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding adsList}">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <DockPanel  VerticalAlignment="Top" Height="150" ></DockPanel>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+
+                        <DockPanel LastChildFill="True">
+
+
+                            <Viewbox DockPanel.Dock="Left">
+                                    <Image Source="{Binding MainImage.ImagePath}" HorizontalAlignment="Left"></Image>
+                            </Viewbox>
+
+                                <Grid Background="Red">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="25" ></RowDefinition>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition Height="25" ></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    
+                                    <StackPanel Background="LightGray" Grid.Row="0" Orientation="Horizontal" >
+                                        <TextBlock  FontSize="16" Text="{Binding Header}" ></TextBlock>
+                                    </StackPanel>
+                                    <TextBlock Text="{Binding Text}" Grid.Row="1"></TextBlock>
+                                    <DockPanel Grid.Row="2" Background="Aqua">
+
+                                        <TextBlock Text="Price:"  VerticalAlignment="Center" DockPanel.Dock="Left"></TextBlock>
+                                    <TextBlock Text="{Binding Price}" DockPanel.Dock="Left" VerticalAlignment="Center"></TextBlock>
+
+                                    <TextBlock Text="{Binding  Account.UserProfile.PhoneNumber}" DockPanel.Dock="Right" VerticalAlignment="Center"></TextBlock>
+                                    <TextBlock Text="Phone number:" DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
+                                        
+                                        
+                                </DockPanel>
+                                </Grid>
+   
+
+
+                            </DockPanel>
+
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </Grid>
     </GroupBox>
 </UserControl>
