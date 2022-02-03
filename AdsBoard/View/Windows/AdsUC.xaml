@@ -31,10 +31,10 @@
                     <Button Content="Find" FontSize="16" Width="100" VerticalAlignment="Center" HorizontalAlignment="Right"></Button>
                 </DockPanel>
             </GroupBox>
-            <ListBox Grid.Row="2" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding adsList}">
+            <ListBox Grid.Row="2" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  ItemsSource="{Binding adsList}">
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <DockPanel  VerticalAlignment="Top" Height="150" ></DockPanel>
+                        <StackPanel></StackPanel>
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
                 <ListBox.ItemContainerStyle>
@@ -48,7 +48,7 @@
                         <DockPanel LastChildFill="True">
 
 
-                            <Viewbox DockPanel.Dock="Left">
+                            <Viewbox DockPanel.Dock="Left" Width="150">
                                     <Image Source="{Binding MainImage.ImagePath}" HorizontalAlignment="Left"></Image>
                             </Viewbox>
 

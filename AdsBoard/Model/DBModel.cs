@@ -206,7 +206,7 @@ namespace AdsBoard.Model
     class Ad: IDataErrorInfo
     {
         public int Id { get; set; }
-        public string Header { get; set; }
+        //public string Header { get; set; }
         public string Text { get; set; }
 
         public int Price { get; set; }
@@ -233,12 +233,12 @@ namespace AdsBoard.Model
                 string error = String.Empty;
                 switch (columnName)
                 {
-                    case nameof(Header):
+                    /*case nameof(Header):
                         if (Header == string.Empty)
                         {
                             error = "Поле не может быть пустым";
                         }
-                        break;
+                        break;*/
                     case nameof(Text):
                         if (Text == string.Empty)
                         {
@@ -264,7 +264,7 @@ namespace AdsBoard.Model
                         }
                         break;
                     case nameof(EngineVolume):
-                        if (EngineVolume >0)
+                        if (EngineVolume <=0)
                         {
                             error = "Значение должно быть больше нуля";
                         }

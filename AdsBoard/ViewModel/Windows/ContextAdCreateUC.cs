@@ -15,7 +15,7 @@ using System.Windows.Documents;
 
 namespace AdsBoard.ViewModel.Windows
 {
-    class ContextAdCreateUC:Common.Notify
+    class ContextAdCreateUC : Common.Notify
     {
         public Model.Ad Ad { get; set; } = new Model.Ad();
 
@@ -26,7 +26,7 @@ namespace AdsBoard.ViewModel.Windows
         public List<string> TransmissionTypeList { get; set; } = new List<string> { "automatic", "manual" };
 
         private string _SelectedMainAdImage;
-        public string SelectedMainAdImage 
+        public string SelectedMainAdImage
         {
             get
             {
@@ -58,7 +58,7 @@ namespace AdsBoard.ViewModel.Windows
                     Viewbox viewBox = ((Viewbox)obj);
 
                     Image img = (Image)viewBox.Child;
-                    
+
                     string imgPath = img.Source.ToString().Remove(0, 8).Replace('/', '\\');
 
                     AdImages.Remove(imgPath);
@@ -102,7 +102,7 @@ namespace AdsBoard.ViewModel.Windows
                             foreach (var img in ofd.FileNames)
                             {
 
-                                if(!AdImages.Contains(img))
+                                if (!AdImages.Contains(img))
                                 {
                                     //Add images
                                     AdImages.Add(img.ToString());
@@ -136,32 +136,48 @@ namespace AdsBoard.ViewModel.Windows
                     List<Model.Image> imageList = new List<Model.Image>();
                     Model.Image mainImage = new Model.Image();
 
-
                     Ad.Account = Common.CurrentUser.CurrentAccount;
                     var newAd = Ad;
 
-                    //add ad
-                    Model.DBModel.GetDBModel().Ads.Add(newAd);
-                    Model.DBModel.GetDBModel().SaveChanges();
-
-                    //copying image file to directory AdsImages with owerwrite
-                    string newImgPath = Directory.GetCurrentDirectory() + @"\AdsImages\" + Common.CurrentUser.CurrentAccount.Id + "_" + Common.CurrentUser.CurrentAccount.Login + "_"+newAd.Id+"_";
-                    foreach (var imgPath in AdImages)
+                    //Проверяем что бы все поля объекта Ad были заполнены исключая поля валидации("Item" и "Error") и Id
+                    if (Ad.GetType().GetProperties().Where(p => p.PropertyType == typeof(string))
+                                                    .Where(p=>p.Name != "Item" && p.Name != "Error")
+                                                    .Any(s => string.IsNullOrEmpty(s.GetValue(Ad)?.ToString())) 
+                        || 
+                        Ad.GetType().GetProperties()
+                                                    .Where(p => p.PropertyType == typeof(int) || p.PropertyType == typeof(double))
+                                                    .Where(p => p.Name != nameof(Ad.Id))
+                                                    .Any(v=>double.Parse(v.GetValue(Ad).ToString())==0))
                     {
-                        File.Copy(imgPath, newImgPath + Path.GetFileName(imgPath.ToString()), true);
-                        imageList.Add(new Model.Image { ImagePath = newImgPath + Path.GetFileName(imgPath.ToString()), Ad = newAd });
+
+                        System.Windows.Forms.MessageBox.Show("Не все поля заполнены");
+                    }
+                    else
+                    {
+                        //add ad
+                        Model.DBModel.GetDBModel().Ads.Add(newAd);
+                        Model.DBModel.GetDBModel().SaveChanges();
+
+                        //copying image file to directory AdsImages with owerwrite
+                        string newImgPath = Directory.GetCurrentDirectory() + @"\AdsImages\" + Common.CurrentUser.CurrentAccount.Id + "_" + Common.CurrentUser.CurrentAccount.Login + "_" + newAd.Id + "_";
+                        foreach (var imgPath in AdImages)
+                        {
+                            File.Copy(imgPath, newImgPath + Path.GetFileName(imgPath.ToString()), true);
+                            imageList.Add(new Model.Image { ImagePath = newImgPath + Path.GetFileName(imgPath.ToString()), Ad = newAd });
+                        }
+
+                        //add images
+                        Model.DBModel.GetDBModel().Images.AddRange(imageList);
+                        Model.DBModel.GetDBModel().SaveChanges();
+
+
+                        //Set mainImage
+                        newAd.MainImage = imageList.Where(i => i.ImagePath == newImgPath + Path.GetFileName(SelectedMainAdImage)).FirstOrDefault();
+                        Model.DBModel.GetDBModel().SaveChanges();
+
+                        ((ContextMainWindow)System.Windows.Application.Current.MainWindow.DataContext).MainWindowContent = new View.Windows.AdsUC();
                     }
 
-                    //add images
-                    Model.DBModel.GetDBModel().Images.AddRange(imageList);
-                    Model.DBModel.GetDBModel().SaveChanges();
-
-                    
-                    //Set mainImage
-                    newAd.MainImage = imageList.Where(i=>i.ImagePath== newImgPath+Path.GetFileName(SelectedMainAdImage)).FirstOrDefault();
-                    Model.DBModel.GetDBModel().SaveChanges();
-
-                    ((ContextMainWindow)System.Windows.Application.Current.MainWindow.DataContext).MainWindowContent = new View.Windows.AdsUC();
                 });
             }
         }

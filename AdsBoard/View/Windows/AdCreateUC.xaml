@@ -34,7 +34,7 @@
         <GroupBox Header="New Ad" FontSize="16">
             <DockPanel>
                 <StackPanel Orientation="Vertical" DockPanel.Dock="Top">
-                    <DockPanel>
+                    <!--DockPanel>
                         <TextBlock Text="Header:" FontSize="16" VerticalAlignment="Center"></TextBlock>
                         <TextBox DataContext="{Binding Ad}" Style="{StaticResource ValidationTextBox}">
                             <TextBox.Text>
@@ -45,7 +45,7 @@
                                 </Binding>
                             </TextBox.Text>
                         </TextBox>
-                    </DockPanel>
+                    </DockPanel-->
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.6*"></ColumnDefinition>
@@ -115,7 +115,7 @@
                         </DockPanel>
                         <DockPanel Grid.Row="1" Margin="2">
                             <TextBlock  VerticalAlignment="Center"  Text="Price:"></TextBlock>
-                            <TextBox  HorizontalAlignment="Left" Text="{Binding Ad.Price,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay, StringFormat={}{0:N}}" Style="{StaticResource ValidationTextBox}" Width="120" VerticalAlignment="Center"></TextBox>
+                            <TextBox  HorizontalAlignment="Left" Text="{Binding Ad.Price, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N},ValidatesOnDataErrors=True}" Style="{StaticResource ValidationTextBox}" Width="120" VerticalAlignment="Center"></TextBox>
 
                             <TextBlock Text="Release year:"  Margin="10 0 10 0"></TextBlock>
                             <TextBox  Text="{Binding Ad.ReleaseYear,UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" Width="80" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource ValidationTextBox}"></TextBox>
