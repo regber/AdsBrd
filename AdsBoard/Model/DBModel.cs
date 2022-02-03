@@ -210,6 +210,15 @@ namespace AdsBoard.Model
         public string Text { get; set; }
 
         public int Price { get; set; }
+        public string Producer { get; set; }
+        public string Model { get; set; }
+        public double EngineVolume { get; set; }
+        public int RealeaseYear { get; set; }
+        public string Drive { get; set; }
+        public string Transmission { get; set; }
+        public string FuelType { get; set; }
+
+
 
         public Account Account { get; set; }
 
@@ -240,6 +249,48 @@ namespace AdsBoard.Model
                         if (Price <= 0)
                         {
                             error = "Цена должна быть больше нуля";
+                        }
+                        break;
+                    case nameof(Producer):
+                        if (Producer == string.Empty)
+                        {
+                            error = "Поле не может быть пустым";
+                        }
+                        break;
+                    case nameof(Model):
+                        if (Model == string.Empty)
+                        {
+                            error = "Поле не может быть пустым";
+                        }
+                        break;
+                    case nameof(EngineVolume):
+                        if (EngineVolume >0)
+                        {
+                            error = "Значение должно быть больше нуля";
+                        }
+                        break;
+                    case nameof(RealeaseYear):
+                        if (RealeaseYear == 0)
+                        {
+                            error = "Укажите значение";
+                        }
+                        break;
+                    case nameof(Drive):
+                        if (Drive == string.Empty)
+                        {
+                            error = "Поле не может быть пустым";
+                        }
+                        break;
+                    case nameof(Transmission):
+                        if (Transmission == string.Empty)
+                        {
+                            error = "Поле не может быть пустым";
+                        }
+                        break;
+                    case nameof(FuelType):
+                        if (FuelType == string.Empty)
+                        {
+                            error = "Поле не может быть пустым";
                         }
                         break;
                 }
