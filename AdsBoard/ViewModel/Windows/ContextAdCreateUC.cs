@@ -119,7 +119,7 @@ namespace AdsBoard.ViewModel.Windows
             {
                 return new Common.Commands.Command(obj =>
                 {
-                    ((ContextMainWindow)System.Windows.Application.Current.MainWindow.DataContext).MainWindowContent = new View.Windows.AdsUC();
+                    ((ContextMainWindow)System.Windows.Application.Current.MainWindow.DataContext).MainWindowContent = new View.Windows.MyAdsUC();
                 });
             }
         }

@@ -5,15 +5,194 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AdsBoard.View.Windows"
              xmlns:ViewModel="clr-namespace:AdsBoard.ViewModel.Windows"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             xmlns:Converters="clr-namespace:AdsBoard.Common.Converters"
+             d:DesignHeight="450" d:DesignWidth="800" Background="WhiteSmoke">
     <UserControl.Resources>
         <ViewModel:ContextMyAds x:Key="ContextMyAds"></ViewModel:ContextMyAds>
+        <Converters:MultiParamConverter x:Key="MultiParamConverter"></Converters:MultiParamConverter>
     </UserControl.Resources>
     <UserControl.DataContext>
         <Binding Source="{StaticResource ContextMyAds}"></Binding>
     </UserControl.DataContext>
-    <Grid>
-        <Button Content="123" Command="{Binding  CreateNewAd}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type UserControl}}}"></Button>
-    </Grid>
+    <GroupBox Header="Ads" Margin="3">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Button HorizontalAlignment="Left" Width="100" FontSize="16" Content="Back" Command="{Binding Back}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"></Button>
+            <Button HorizontalAlignment="Right" Width="100" FontSize="16" Content="Create Ad" Command="{Binding CreateNewAd}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"></Button>
+            <!--GroupBox Header="Ads Filter" Grid.Row="1">
+
+                <Grid >
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <DockPanel VerticalAlignment="Center" Grid.Row="0" Margin="2">
+                        <TextBlock Text="Producer:"  Margin="0 0 10 0"></TextBlock>
+                        <TextBox Text="{Binding AdFilter.Producer, UpdateSourceTrigger=PropertyChanged}" Name="ProducerTextBox" Width="150" VerticalAlignment="Center" HorizontalAlignment="Left">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                    <i:InvokeCommandAction Command="{Binding ProducerHintListChange}" CommandParameter="{Binding Path=Text, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type TextBox}}}"></i:InvokeCommandAction>
+                                    <ei:ChangePropertyAction TargetObject="{Binding ElementName=ProducerPopup}" PropertyName="IsOpen"  Value="True"></ei:ChangePropertyAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
+                        <Popup Name="ProducerPopup" IsOpen="False" PopupAnimation="Slide"  StaysOpen="False" Placement="Bottom" AllowsTransparency="True" PlacementTarget="{Binding  ElementName=ProducerTextBox}">
+                            <ListBox ItemsSource="{Binding producerHintList}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding ProducerHintListSelected}">
+                                            <i:InvokeCommandAction.CommandParameter>
+                                                <MultiBinding Converter="{StaticResource  MultiParamConverter}">
+                                                    <Binding ElementName="ProducerTextBox"></Binding>
+                                                    <Binding Path="SelectedValue" RelativeSource="{RelativeSource Mode=FindAncestor,AncestorType={x:Type ListBox}}"></Binding>
+                                                </MultiBinding>
+                                            </i:InvokeCommandAction.CommandParameter>
+                                        </i:InvokeCommandAction>
+                                    </i:EventTrigger>
+                                    <ei:DataTrigger Binding="{Binding producerHintList.Count,UpdateSourceTrigger=PropertyChanged}" Value="0">
+                                        <ei:ChangePropertyAction TargetObject="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Popup}}}" PropertyName="IsOpen" Value="False"></ei:ChangePropertyAction>
+                                    </ei:DataTrigger>
+                                </i:Interaction.Triggers>
+                            </ListBox>
+                        </Popup>
+
+
+                        <TextBlock Text="Car Model:"  Margin="10 0 10 0"></TextBlock>
+                        <TextBox Text="{Binding AdFilter.Model, UpdateSourceTrigger=PropertyChanged}" Name="CarModelTextBox" Width="150" VerticalAlignment="Center" HorizontalAlignment="Left" >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                    <i:InvokeCommandAction Command="{Binding CarModelHintListChange}">
+                                        <i:InvokeCommandAction.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource MultiParamConverter}">
+                                                <Binding Path="Text" RelativeSource="{RelativeSource Mode=FindAncestor,AncestorType={x:Type TextBox}}"></Binding>
+                                                <Binding Path="Text" ElementName="ProducerTextBox"></Binding>
+                                            </MultiBinding>
+                                        </i:InvokeCommandAction.CommandParameter>
+                                    </i:InvokeCommandAction>
+                                    <ei:ChangePropertyAction TargetObject="{Binding ElementName=CarModelPopup}" PropertyName="IsOpen"  Value="True"></ei:ChangePropertyAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
+                        <Popup Name="CarModelPopup" IsOpen="False" PopupAnimation="Slide"  StaysOpen="False" Placement="Bottom" AllowsTransparency="True" PlacementTarget="{Binding  ElementName=CarModelTextBox}">
+                            <ListBox ItemsSource="{Binding carModelsHintList}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding CarModelHintListSelected}">
+                                            <i:InvokeCommandAction.CommandParameter>
+                                                <MultiBinding Converter="{StaticResource MultiParamConverter}">
+                                                    <Binding ElementName="CarModelTextBox"></Binding>
+                                                    <Binding Path="SelectedValue" RelativeSource="{RelativeSource Mode=FindAncestor,AncestorType={x:Type ListBox}}"></Binding>
+                                                </MultiBinding>
+                                            </i:InvokeCommandAction.CommandParameter>
+                                        </i:InvokeCommandAction>
+                                    </i:EventTrigger>
+                                    <ei:DataTrigger Binding="{Binding producerHintList.Count,UpdateSourceTrigger=PropertyChanged}" Value="0">
+                                        <ei:ChangePropertyAction TargetObject="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Popup}}}" PropertyName="IsOpen" Value="False"></ei:ChangePropertyAction>
+                                    </ei:DataTrigger>
+                                </i:Interaction.Triggers>
+                            </ListBox>
+                        </Popup>
+
+                    </DockPanel>
+                    <DockPanel  VerticalAlignment="Center" Grid.Row="1" Margin="2">
+                        <TextBlock  VerticalAlignment="Center"  Text="Price:"></TextBlock>
+                        <TextBox  HorizontalAlignment="Left" Text="{Binding AdFilter.LowerPrice, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N},ValidatesOnDataErrors=True}"  Width="80" VerticalAlignment="Center"></TextBox>
+                        <TextBlock>-</TextBlock>
+                        <TextBox  HorizontalAlignment="Left" Text="{Binding AdFilter.TopPrice, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N},ValidatesOnDataErrors=True}"  Width="80" VerticalAlignment="Center"></TextBox>
+
+                        <TextBlock Text="Release year:"  Margin="10 0 10 0"></TextBlock>
+                        <TextBox  Text="{Binding AdFilter.LowerReleaseYear,UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" Width="80" VerticalAlignment="Center" HorizontalAlignment="Left" ></TextBox>
+                        <TextBlock>-</TextBlock>
+                        <TextBox  Text="{Binding AdFilter.TopReleaseYear,UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" Width="80" VerticalAlignment="Center" HorizontalAlignment="Left" ></TextBox>
+
+                        <TextBlock Text="Transmission:"  Margin="10 0 10 0"></TextBlock>
+                        <ComboBox  SelectedValue="{Binding AdFilter.Transmission,UpdateSourceTrigger=PropertyChanged}"  ItemsSource="{Binding TransmissionTypeList}" Width="90" VerticalAlignment="Center"  HorizontalAlignment="Stretch"></ComboBox>
+
+                        <TextBlock Text="Fuel type:"  Margin="10 0 10 0"></TextBlock>
+                        <ComboBox  SelectedValue="{Binding AdFilter.FuelType,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding FuelTypeList}"  VerticalAlignment="Center" HorizontalAlignment="Stretch" ></ComboBox>
+                    </DockPanel>
+                    <DockPanel VerticalAlignment="Center" Grid.Row="2" Margin="2">
+                        <TextBlock Text="Engine volume:"  Margin="0 0 10 0"></TextBlock>
+                        <TextBox  Text="{Binding AdFilter.LowerEngineVolume,UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True ,StringFormat={}{0:N}}" Width="80" VerticalAlignment="Center" HorizontalAlignment="Left" ></TextBox>
+                        <TextBlock>-</TextBlock>
+                        <TextBox  Text="{Binding AdFilter.TopEngineVolume,UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True ,StringFormat={}{0:N}}" Width="80" VerticalAlignment="Center" HorizontalAlignment="Left" ></TextBox>
+
+                        <TextBlock Text="Drive:"  Margin="10 0 10 0"></TextBlock>
+                        <ComboBox ItemsSource="{Binding DriverList,UpdateSourceTrigger=PropertyChanged}" SelectedValue="{Binding AdFilter.Drive}" Width="150" VerticalAlignment="Center" HorizontalAlignment="Left" ></ComboBox>
+
+                        <Button Command="{Binding SearchCommand}" Content="Search" Width="100" HorizontalAlignment="Right"></Button>
+                    </DockPanel>
+
+
+                </Grid>
+
+
+            </GroupBox-->
+            <ListBox Grid.Row="2" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  ItemsSource="{Binding AdsList, UpdateSourceTrigger=PropertyChanged}">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel></StackPanel>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderThickness="1" BorderBrush="Black">
+                            <DockPanel LastChildFill="True">
+
+                                <Border BorderThickness="1" BorderBrush="Black">
+                                    <Viewbox DockPanel.Dock="Left" Width="150">
+                                        <Image Source="{Binding MainImage.ImagePath}" HorizontalAlignment="Left"></Image>
+                                    </Viewbox>
+                                </Border>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="25" ></RowDefinition>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition Height="25" ></RowDefinition>
+                                    </Grid.RowDefinitions>
+
+                                    <StackPanel Background="LightGray" Grid.Row="0" Orientation="Horizontal" >
+                                        <TextBlock  FontSize="16">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="Продажа {0} {1}, {2} год">
+                                                    <Binding Path="Producer"></Binding>
+                                                    <Binding Path="Model"></Binding>
+                                                    <Binding Path="ReleaseYear"></Binding>
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </StackPanel>
+                                    <TextBlock Text="{Binding Text}" TextWrapping="Wrap" Grid.Row="1"></TextBlock>
+                                    <DockPanel Grid.Row="2">
+
+                                        <TextBlock Text="Price:"  VerticalAlignment="Center" DockPanel.Dock="Left"></TextBlock>
+                                        <TextBlock Text="{Binding Price}" DockPanel.Dock="Left" VerticalAlignment="Center"></TextBlock>
+
+
+                                        <Button HorizontalAlignment="Right" Width="100" DataContext="{StaticResource ContextMyAds}" Content="Delete Ad" Command="{Binding DeleteAd}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ListBoxItem}}}"></Button>
+
+                                    </DockPanel>
+                                </Grid>
+
+
+
+                            </DockPanel>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+    </GroupBox>
 </UserControl>
